@@ -52,7 +52,10 @@ def valid_proof(last_hash, proof):
     beg = str(guess_hash[:6])
     end = str(new_key[-6:])
     # return only if the beg == the end
-    return beg == end
+    if beg == end:
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
