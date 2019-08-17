@@ -3,16 +3,44 @@ import random
 
 
 def get_new_value(old_gen, old_automata):
+    print(old_gen)
+    new_automata = old_automata
+    cur_row = old_automata[SQ_NUM*old_gen:SQ_NUM*(old_gen+1)]
+    print(SQ_NUM*old_gen)
+    for i in range(len(cur_row)):
+        n = i + 1
+        e = i - 1
+        s = ((SQ_NUM*old_gen) + i) + SQ_NUM
+
+        if s < len(automata):
+            if cur_row[i] == 1:
+                if n < len(cur_row):
+                    if cur_row[n] == 1 and cur_row[e] == 1:
+                        new_automata[s] = 0
+                    else:
+                        new_automata[s] = 1
+                else:
+                    if cur_row[e] == 1:
+                        new_automata[s] = 0
+                    else:
+                        new_automata[s] = 1
+            else:
+                if n < len(cur_row):
+                    if cur_row[n] == 0 and cur_row[e] == 0:
+                        new_automata[s] = 0
+                    else:
+                        new_automata[s] = 1
+                else:
+                    if cur_row[e] == 0:
+                        new_automata[s] = 0
+                    else:
+                        new_automata[s] = 1
+            if i == 0 or i == (len(cur_row)-1):
+                if cur_row[i] == 1:
+                    new_automata[s] = 1
     # TBC - add code to generate the next row of cells,
     # then replace the return statement below to
     # return the updated automata
-    for i in range(len(old_automata)-1):
-        if old_automata[i + 1]:
-            old_automata[72] = 1
-        if old_automata[i] and old_automata[i + 1] == 1:
-            old_automata[i] = 1
-        if old_automata[i - 1] == 1:
-            old_automata[i] = 1
     return old_automata
 
 
@@ -66,7 +94,7 @@ clock = pygame.time.Clock()
 
 # -------- Main Program Loop -----------
 while not done:
-    # --- Main event loop
+        # --- Main event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -81,16 +109,16 @@ while not done:
             if stop_play_button.collidepoint(click_pos):
                 running = not running
             if restart_button.collidepoint(click_pos):
-                automata = [0] * (SQ_NUM*SQ_NUM)
+                new_automata = [0] * (SQ_NUM*SQ_NUM)
                 # Assign middle of first row to 1
-                automata[SQ_NUM//2] = 1
+                new_automata[SQ_NUM//2] = 1
                 generations = 0
 
     # --- Game logic should go here
     if running:
         if generations < SQ_NUM:
             generations += 1
-            automata = get_new_value(generations-1, automata)
+            new_automata = get_new_value(generations-1, automata)
 
         # --- Screen-clearing code goes here
 
