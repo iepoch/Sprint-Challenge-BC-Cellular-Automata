@@ -15,7 +15,7 @@ def get_new_value(old_gen, old_automata):
         if s < len(new_automata):
             if i == 0 or i == (len(cur_row)-1):
                 if cur_row[i] == 1:
-                    new_automata[s] = 0
+                    new_automata[s] = 1
             elif cur_row[i] == 1:
                 if n < len(cur_row):
                     if cur_row[n] == 1 and cur_row[e] == 1:
