@@ -13,7 +13,10 @@ def get_new_value(old_gen, old_automata):
         s = ((SQ_NUM*old_gen) + i) + SQ_NUM
 
         if s < len(new_automata):
-            if cur_row[i] == 1:
+            if i == 0 or i == (len(cur_row)-1):
+                if cur_row[i] == 1:
+                    new_automata[s] = 0
+            elif cur_row[i] == 1:
                 if n < len(cur_row):
                     if cur_row[n] == 1 and cur_row[e] == 1:
                         new_automata[s] = 0
@@ -35,9 +38,7 @@ def get_new_value(old_gen, old_automata):
                         new_automata[s] = 0
                     else:
                         new_automata[s] = 1
-            if i == 0 or i == (len(cur_row)-1):
-                if cur_row[i] == 1:
-                    new_automata[s] = 1
+
     # TBC - add code to generate the next row of cells,
     # then replace the return statement below to
     # return the updated automata
