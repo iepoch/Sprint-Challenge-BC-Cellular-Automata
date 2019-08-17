@@ -22,16 +22,13 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    # proof = 0
     #  TODO: Your code here
-
-    first_proof = random.randint(10000, 999999)
-    end_proof = random.randint(1000000000000, 9999999999999)
-    new_proof = str(first_proof) + str(end_proof)
-    proof = int(new_proof)
+    # the random proof give me back more numbers to validate and check for faster results
+    proof = random.randint(0, 9999999999999)
 
     while valid_proof(last_proof, proof) is False:
-        proof = random.randint(0, 9999999999999)
+        proof += 1
     return proof
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -45,21 +42,17 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...999123456, new hash 123456888...
     """
-    print(f'Last Hash : {last_hash}, Proof: {proof}')
-    key = str(last_hash)
-    old_key = len(str(last_hash))
-    print(f'Old Key:{old_key}')
-    found_key = key[int(old_key)-6: int(old_key)]
-    print(found_key)
-    guess = str(proof)
+    guess = str(proof).encode()
+    key = str(last_hash).encode()
+    # turn them both in hash strings to make it easier
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    new_key = hashlib.sha256(key).hexdigest()
 
-    guess_hash = guess[0:6]
-    print(guess_hash)
-
-    if found_key == guess_hash:
-        return True
-    else:
-        return False
+    # get the first six of the proof and the last 6 of the last_hash
+    beg = str(guess_hash[:6])
+    end = str(new_key[-6:])
+    # return only if the beg == the end
+    return beg == end
 
 
 if __name__ == '__main__':
