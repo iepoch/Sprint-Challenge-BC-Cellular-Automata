@@ -12,7 +12,7 @@ def get_new_value(old_gen, old_automata):
         e = i - 1
         s = ((SQ_NUM*old_gen) + i) + SQ_NUM
 
-        if s < len(automata):
+        if s < len(new_automata):
             if cur_row[i] == 1:
                 if n < len(cur_row):
                     if cur_row[n] == 1 and cur_row[e] == 1:
