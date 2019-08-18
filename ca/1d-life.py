@@ -3,46 +3,41 @@ import random
 
 
 def get_new_value(old_gen, old_automata):
-    print(old_gen)
-    new_automata = old_automata
+    # print(old_gen)
+
     cur_row = old_automata[SQ_NUM*old_gen:SQ_NUM*(old_gen+1)]
-    print(SQ_NUM*old_gen)
+    # print(SQ_NUM*old_gen)
     for i in range(len(cur_row)):
         n = i + 1
         e = i - 1
-        s = ((SQ_NUM*old_gen) + i) + SQ_NUM
-
-        if s < len(new_automata):
-            if i == 0 or i == (len(cur_row)-1):
+        s = ((49*old_gen) + i) + 49
+        print(s)
+        if s < len(old_automata):
+            if i == (len(cur_row)-1) or i == 0:
                 if cur_row[i] == 1:
-                    new_automata[s] = 1
+                    old_automata[s] = 1
             elif cur_row[i] == 1:
                 if n < len(cur_row):
                     if cur_row[n] == 1 and cur_row[e] == 1:
-                        new_automata[s] = 0
+                        old_automata[s] = 0
                     else:
-                        new_automata[s] = 1
+                        old_automata[s] = 1
+            elif cur_row[i] == 1:
+                if n == 0 or e == 1:
+                    old_automata[s] = 1
                 else:
-                    if cur_row[e] == 1:
-                        new_automata[s] = 0
-                    else:
-                        new_automata[s] = 1
+                    old_automata = 0
             else:
                 if n < len(cur_row):
                     if cur_row[n] == 0 and cur_row[e] == 0:
-                        new_automata[s] = 0
+                        old_automata[s] = 0
                     else:
-                        new_automata[s] = 1
-                else:
-                    if cur_row[e] == 0:
-                        new_automata[s] = 0
-                    else:
-                        new_automata[s] = 1
+                        old_automata[s] = 1
 
     # TBC - add code to generate the next row of cells,
     # then replace the return statement below to
     # return the updated automata
-    return old_automata
+    # return old_automata
 
 
 # Define some colors and other constants
