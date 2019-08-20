@@ -22,8 +22,14 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    # proof = 0
     #  TODO: Your code here
+    # the random proof give me back more numbers to validate and check for faster results
+    proof = random.randint(0, 9999999999999)
+
+    while valid_proof(last_proof, proof) is False:
+        proof += 1
+    return proof
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -36,9 +42,20 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...999123456, new hash 123456888...
     """
+    guess = str(proof).encode()
+    key = str(last_hash).encode()
+    # turn them both in hash strings to make it easier
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    new_key = hashlib.sha256(key).hexdigest()
 
-    # TODO: Your code here!
-    pass
+    # get the first six of the proof and the last 6 of the last_hash
+    beg = str(guess_hash[:6])
+    end = str(new_key[-6:])
+    # return only if the beg == the end
+    if beg == end:
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
